@@ -3,7 +3,7 @@ package com.aghogho.pokemonapp.model.remotedata
 
 import com.google.gson.annotations.SerializedName
 
-data class responses(
+data class ListOfPokemons(
     @SerializedName("abilities")
     val abilities: List<Ability>,
     @SerializedName("base_experience")
