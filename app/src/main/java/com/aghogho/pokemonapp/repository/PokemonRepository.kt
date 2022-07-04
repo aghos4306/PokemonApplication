@@ -3,10 +3,11 @@ package com.aghogho.pokemonapp.repository
 import com.aghogho.pokemonapp.model.PokemonApi
 import com.aghogho.pokemonapp.model.remote.responses.Pokemon
 import com.aghogho.pokemonapp.model.remote.responses.PokemonList
-import com.aghogho.pokemonapp.model.remotedata.ListOfPokemons
 import com.aghogho.pokemonapp.utils.Resources
+import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
+@ActivityScoped
 class PokemonRepository @Inject constructor(
     private val api: PokemonApi
 ) {
