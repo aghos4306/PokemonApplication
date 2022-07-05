@@ -12,7 +12,7 @@ class PokemonRepository @Inject constructor(
     private val api: PokemonApi
 ) {
 
-    suspend fun getAllPokemons(limit: Int, offset: Int): Resources<PokemonList> {
+    suspend fun getAllPokemon(limit: Int, offset: Int): Resources<PokemonList> {
         val response = try {
             api.getAllPokemon(limit, offset)
         } catch (exp: Exception) {

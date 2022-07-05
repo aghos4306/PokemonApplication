@@ -5,7 +5,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.capitalize
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
@@ -16,7 +15,6 @@ import com.aghogho.pokemonapp.utils.Resources
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.http.Query
 import java.util.*
 import javax.inject.Inject
 
@@ -35,6 +33,10 @@ class PokemonListViewModel @Inject constructor(
     private var cachedPokemonList = listOf<PokemonListEntry>()
     var isSearchStarting = true
     var isSearching = mutableStateOf(false)
+
+    init {
+        loadPokemonPagination()
+    }
 
     fun searchPokemonList(query: String) {
         val listToSearch = if (isSearchStarting) {
@@ -66,7 +68,7 @@ class PokemonListViewModel @Inject constructor(
     fun loadPokemonPagination() {
         viewModelScope.launch {
             isLoading.value = true
-            val result = repository.getAllPokemons(PAGE_SIZE, curPage * PAGE_SIZE)
+            val result = repository.getAllPokemon(PAGE_SIZE, curPage * PAGE_SIZE)
             when(result) {
                 is Resources.Success -> {
                     endReached.value = curPage * PAGE_SIZE >= result.data!!.count
