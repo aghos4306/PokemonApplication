@@ -10,6 +10,7 @@ import androidx.navigation.navArgument
 import com.aghogho.pokemonapp.screens.PokemonDetailScreen
 import com.aghogho.pokemonapp.screens.PokemonListScreen
 import com.aghogho.pokemonapp.screens.PokemonSplashScreen
+import java.util.*
 
 @Composable
 fun PokemonNavigation() {
@@ -32,8 +33,42 @@ fun PokemonNavigation() {
             type = NavType.StringType
         })) { backStackEntry ->
             backStackEntry.arguments?.getString("pokemonId").let {
-                PokemonDetailScreen(navController = navController, pokemonId = it.toString())
+                PokemonDetailScreen(
+                    navController = navController,
+                    pokemonId = it.toString(),
+                    //dominantColour = dominantColour,
+                    pokemonName = pokemonName?.toLowerCase(Locale.ROOT) ?: ""
+                )
             }
         }
+
+//        composable(
+//            "pokemon_detail_screen/{dominantColour}/{pokemonName}",
+//            arguments = listOf(
+//                navArgument("dominantColour") {
+//                    type = NavType.IntType
+//                },
+//                navArgument("pokemonName") {
+//                    type = NavType.IntType
+//                }
+//            )
+//        ) {
+//            val dominantColour = remember {
+//                val colour = it.arguments?.getInt("dominantColour")
+//                colour?.let { Color(it) } ?: Color.White
+//            }
+//
+//            val pokemonName = remember {
+//                it.arguments?.getString("pokemonName")
+//            }
+//
+//            PokemonDetailScreen(
+//                dominantColour = dominantColour,
+//                pokemonName = pokemonName?.toLowerCase(Locale.ROOT) ?: "",
+//                navController = navController,
+//                pokemonId = ""
+//            )
+//        }
+
     }
 }
