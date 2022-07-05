@@ -29,14 +29,19 @@ fun PokemonNavigation() {
 
         //set route to navigate to specific pokemon
         val pokemonName = PokemonScreens.PokemonDetailScreen.name
-        composable("$pokemonName/{pokemonId}", arguments = listOf(navArgument("pokemonId") {
-            type = NavType.StringType
-        })) { backStackEntry ->
+        composable("$pokemonName/{pokemonId}/{pokemonName}",
+            arguments = listOf(
+                navArgument("pokemonId") {
+                    type = NavType.StringType
+                },
+                navArgument("pokemonName") {
+                    type = NavType.StringType
+                }
+
+            )) { backStackEntry ->
             backStackEntry.arguments?.getString("pokemonId").let {
                 PokemonDetailScreen(
                     navController = navController,
-                    pokemonId = it.toString(),
-                    //dominantColour = dominantColour,
                     pokemonName = pokemonName?.toLowerCase(Locale.ROOT) ?: ""
                 )
             }
