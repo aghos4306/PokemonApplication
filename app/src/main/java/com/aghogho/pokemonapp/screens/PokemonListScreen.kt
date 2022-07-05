@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -41,7 +42,8 @@ import com.google.accompanist.coil.CoilImage
 
 @Composable
 fun PokemonListScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: PokemonListViewModel = hiltViewModel()
 ) {
     
     Surface(
@@ -61,7 +63,9 @@ fun PokemonListScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
-            )
+            ) {
+                viewModel.searchPokemonList(it)
+            }
         }
     }
     
@@ -201,7 +205,45 @@ fun PokemonRow(
     }
 }
 
+@Composable
+fun PokemonLlist(
+    navController: NavController,
+    viewModel: PokemonListViewModel = hiltViewModel()
+) {
 
+    val pokemonnList by remember {
+        viewModel.pokemonnlist
+    }
+    val endReached by remember {
+        viewModel.endReached
+    }
+    val loadError by remember {
+        viewModel.loadError
+    }
+    val isLoading by remember {
+        viewModel.isLoading
+    }
+    val isSearching by remember {
+        viewModel.isSearching
+    }
+
+    LazyColumn(contentPadding = PaddingValues(16.dp)) {
+        val itemCount = if (pokemonnList.size % 2 == 0) {
+            pokemonnList.size / 2
+        } else {
+            pokemonnList.size / 2 + 1
+        }
+        items(itemCount) {
+            if (it >= itemCount - 1 && !endReached && !isLoading && !isSearching) {
+                LaunchedEffect(key1 = true) {
+                    viewModel.loadPokemonPagination()
+                }
+            }
+
+        }
+    }
+
+}
 
 
 
