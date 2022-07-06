@@ -1,6 +1,7 @@
 # PokemonApplication
 An Android project that consumes data from a third party API. Built with MVVM, Kotlin, Clean Architecture, Compose UI
 Dagger Hilt DI
+
 #Libraries
 - Viewmodel - Persist view state across pokemonlist page and pokemondetails page
 - Retrofit - Http Client and supports coroutines out of the box
